@@ -27,14 +27,6 @@ public class Direccion implements Serializable{
 	
 	
 	
-	public Direccion(String calle, String mumero, String codigoPostal, String departamento, String piso, String local) {
-		this.calle = calle;
-		this.mumero = mumero;
-		this.codigoPostal = codigoPostal;
-		this.departamento = departamento;
-		this.piso = piso;
-		this.local = local;
-	}
 
 	
 

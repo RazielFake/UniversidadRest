@@ -13,6 +13,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -75,6 +77,16 @@ public class Carrera implements Serializable{
 			return false;
 		Carrera other = (Carrera) obj;
 		return Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre);
+	}
+	
+	@PrePersist
+	private void antesPersisitir() {
+		this.fechaAlta = new Date();
+	}
+	
+	@PreUpdate
+	private void antesActualizar() {
+		this.fechaModificacion = new Date();
 	}
 
 	private static final long serialVersionUID = 7386711690996525949L;
