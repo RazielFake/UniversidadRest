@@ -20,12 +20,10 @@ import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Setter
 @Getter
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "carreras", schema = "universidad")
 public class Carrera implements Serializable{
@@ -46,7 +44,7 @@ public class Carrera implements Serializable{
 	@Column(name = "fecha_alta")
 	private Date fechaAlta;
 	
-	@Column(name = "fecha_modificacion", nullable = true)
+	@Column(name = "fecha_modificacion")
 	private Date fechaModificacion;
 	
 	@OneToMany(mappedBy = "carrera", fetch = FetchType.LAZY)
@@ -60,6 +58,13 @@ public class Carrera implements Serializable{
 		this.nombre = nombre;
 		this.cantidadMaterias = cantidadMaterias;
 		this.cantidadAnios = cantidadAnios;
+	}
+	
+	@Override
+	public String toString() {
+		return "Carrera [id=" + id + ", nombre=" + nombre + ", cantidadMaterias=" + cantidadMaterias
+				+ ", cantidadAnios=" + cantidadAnios + ", fechaAlta=" + fechaAlta + ", fechaModificacion="
+				+ fechaModificacion + "]";
 	}
 
 	@Override

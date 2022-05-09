@@ -10,8 +10,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name = "alumnos", schema = "universidad")
@@ -30,7 +34,7 @@ public class Alumno extends Persona{
 	public String toString() {
 		return super.toString() + 
 				"\nAlumno: "
-				+ "\nCarrera = " + carrera;
+				+ "\nCarrera = ";
 	}
 
 	private static final long serialVersionUID = 282135527639709536L;

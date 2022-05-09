@@ -19,7 +19,7 @@ import lombok.ToString;
 public class Direccion implements Serializable{
 
 	private String calle;
-	private String mumero;
+	private String numero;
 	private String codigoPostal;
 	private String departamento;
 	private String piso;
