@@ -11,14 +11,13 @@ import com.ibm.academia.apirest.entities.Alumno;
 import com.ibm.academia.apirest.entities.Carrera;
 import com.ibm.academia.apirest.entities.Persona;
 import com.ibm.academia.apirest.services.AlumnoDAO;
-import com.ibm.academia.apirest.services.CarreraDAO;
 import com.ibm.academia.apirest.services.PersonaDAO;
 
 @Component
 public class AlumnoComandos implements CommandLineRunner{
 
-	@Autowired
-	private CarreraDAO carreraDao;
+	//@Autowired
+	//private CarreraDAO carreraDao;
 	
 	@Autowired AlumnoDAO alumnoDao;
 	
@@ -34,13 +33,13 @@ public class AlumnoComandos implements CommandLineRunner{
 		alumnos.forEach(alumno -> ((Alumno)alumno).setCarrera(sistemas.get()));
 		alumnos.forEach(alumno -> personaDao.guardar(alumno));*/
 		
-		Optional<Persona> alumno = alumnoDao.buscarPorId(15);
+		//Optional<Persona> alumno = alumnoDao.buscarPorId(15);
 		
 		/*Optional<Persona> personaDni = personaDao.buscarPorDni(alumno.get().getDni());
 		System.out.println(personaDni.toString());*/
 		
-		Iterable<Persona> personasApellido = personaDao.buscarPersonaPorApellido(alumno.get().getApellido());
-		personasApellido.forEach(System.out::println);
+		//Iterable<Persona> personasApellido = personaDao.buscarPersonaPorApellido(alumno.get().getApellido());
+		//personasApellido.forEach(System.out::println);
 		
 		
 	}

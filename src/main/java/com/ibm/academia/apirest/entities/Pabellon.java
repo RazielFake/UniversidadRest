@@ -51,13 +51,16 @@ public class Pabellon implements Serializable{
 	@Column(name = "fecha_modificacion")
 	private Date fechaModificacion;
 	
+	
+	
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(name = "codigoPostal", column = @Column(name = "codigo_postal")),
 		@AttributeOverride(name = "departamento", column = @Column(name = "departamento"))
 	})
 	private Direccion direccion;
-	
+
+	@ToString.Exclude
 	@OneToMany(mappedBy  = "pabellon", fetch = FetchType.LAZY)
 	private Set<Aula> aulas;
 	
@@ -95,6 +98,7 @@ public class Pabellon implements Serializable{
 	private void antesActualizar() {
 		this.fechaModificacion = new Date();
 	}
+
 
 	private static final long serialVersionUID = 5895151497921997034L;
 

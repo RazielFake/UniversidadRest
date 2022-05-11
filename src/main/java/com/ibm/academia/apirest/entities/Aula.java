@@ -29,7 +29,7 @@ import lombok.ToString;
 @Setter
 @Getter
 @NoArgsConstructor
-@ToString
+@ToString(exclude = {"pabellon"})
 @Entity
 @Table(name = "aulas", schema = "universidad")
 public class Aula implements Serializable{
