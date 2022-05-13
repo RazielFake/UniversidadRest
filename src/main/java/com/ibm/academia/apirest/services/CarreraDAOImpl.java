@@ -40,5 +40,15 @@ public class CarreraDAOImpl extends GenericoDAOImpl<Carrera, CarreraRepository> 
 		return this.repository.buscarCarrerasPorProfesoresNombreYProfesoresApellido(nombre, apellido);
 	}
 
+	@Override
+	@Transactional
+	public Carrera actualizar(Carrera carreraEncontrada, Carrera carrera) {
+		Carrera carreraActualizada = null;
+		carreraEncontrada.setCantidadAnios(carrera.getCantidadAnios());
+		carreraEncontrada.setCantidadMaterias(carrera.getCantidadMaterias());
+		carreraActualizada = this.repository.save(carreraEncontrada);
+		return carreraActualizada;
+	}
+
 
 }

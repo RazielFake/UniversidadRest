@@ -19,6 +19,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ibm.academia.apirest.enums.Pizarron;
 
 import lombok.Getter;
@@ -59,6 +60,7 @@ public class Aula implements Serializable{
 	
 	@ManyToOne(optional = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "pabellon_id", foreignKey = @ForeignKey(name = "FK_PABELLON_ID"))
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "aulas"})
 	private Pabellon pabellon;
 	
 	

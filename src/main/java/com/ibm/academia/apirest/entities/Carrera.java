@@ -16,6 +16,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -34,12 +38,17 @@ public class Carrera implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotNull(message = "El campo no puede ser nulo")
+	@NotEmpty(message = "El campo no puede ser vacío")
+	@Size(min = 5, max = 80)
 	@Column(name = "nombre", unique = true, nullable = false, length = 80)
 	private String nombre;
 	
+	@Positive(message = "El campo debe ser mayor a cero.")
 	@Column(name = "cantidad_materias")
 	private Integer cantidadMaterias;
 	
+	@Positive(message = "El campo debe ser mayor a cero.")
 	@Column(name = "cantidad_anios")
 	private Integer cantidadAnios;
 	
