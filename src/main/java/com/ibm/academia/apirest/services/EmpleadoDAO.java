@@ -7,4 +7,8 @@ public interface EmpleadoDAO extends PersonaDAO{
 	
 	public Iterable<Persona> buscarEmpleadoPorTipoEmpleado(TipoEmpleado tipoEmpleado);
 
+	public Persona actualizar(Persona empleadoEncontrado, Persona empleado);
+	
+	public TipoEmpleado obtenerTipoEmpleado(String empleado);
+	
 }

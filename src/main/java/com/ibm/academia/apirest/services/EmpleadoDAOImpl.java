@@ -24,4 +24,25 @@ public class EmpleadoDAOImpl extends PersonaDAOImpl implements EmpleadoDAO{
 		return ((EmpleadoRepository)this.repository).buscarEmpleadoPorTipoEmpleado(tipoEmpleado);
 	}
 
+	@Override
+	public Persona actualizar(Persona empleadoEncontrado, Persona empleado) {
+		Persona empleadoActualizado = null;
+		empleadoEncontrado.setNombre(empleado.getNombre());
+		empleadoEncontrado.setApellido(empleado.getApellido());
+		empleadoEncontrado.setDireccion(empleado.getDireccion());
+		empleadoActualizado = this.repository.save(empleadoEncontrado);
+		return empleadoActualizado;
+	}
+
+	@Override
+	public TipoEmpleado obtenerTipoEmpleado(String empleado) {
+		if(empleado.equalsIgnoreCase("ADMINISTRATIVO"))
+			return TipoEmpleado.ADMINISTRATIVO;
+		else if(empleado.equalsIgnoreCase("MANTENIMIENTO"))
+			return TipoEmpleado.MANTENIMIENTO;
+		else return null;
+	}
+	
+	
+
 }

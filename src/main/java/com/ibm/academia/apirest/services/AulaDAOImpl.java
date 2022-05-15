@@ -35,6 +35,26 @@ public class AulaDAOImpl extends GenericoDAOImpl<Aula, AulaRepository> implement
 	public Optional<Aula> findAulaByNumeroAula(Integer numeroAula) {
 		return this.repository.findAulaByNumeroAula(numeroAula);
 	}
+
+	@Override
+	public Pizarron obtenerTipoPizarron(String pizarron) {
+		if(pizarron.toUpperCase().contains("TIZA"))
+			return Pizarron.PIZARRA_TIZA;
+		else if(pizarron.toUpperCase().contains("BLANCA"))
+			return Pizarron.PIZARRA_BLANCA;
+		else
+			return null;
+	}
+
+	@Override
+	@Transactional
+	public Aula actualizar(Aula aulaEncontrada, Aula aula) {
+		Aula aulaActualizada = null;
+		aulaEncontrada.setCantidadPupitres(aula.getCantidadPupitres());
+		aulaEncontrada.setPizarron(aula.getPizarron());
+		aulaActualizada = this.repository.save(aulaEncontrada);
+		return aulaActualizada;
+	}
 	
 	
 

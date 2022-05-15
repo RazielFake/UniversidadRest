@@ -33,6 +33,12 @@ public class CarreraController {
 	@Autowired
 	private CarreraDAO carreraDao;
 	
+	/**
+	 * Endpoint para listar carreras existentes
+	 * @BadRequestException En caso de que no existan carreras 
+	 * @return las carreras existentes
+	 * @author BRPI 14/05/22
+	 */
 	@GetMapping("/lista/carreras")
 	public List<Carrera> buscarTodas(){
 		List<Carrera> carreras = (List<Carrera>) carreraDao.buscarTodos();
@@ -42,6 +48,13 @@ public class CarreraController {
 		return carreras;
 	}
 	
+	/**
+	 * Endpoint para buscar una carrera por su id
+	 * @param carreraId id de la carrera que se quiere buscar
+	 * @BadRequestException En caso de que falle
+	 * @return Un objeto tipo Carrera
+	 * @author BRPI 14/05/22
+	 */
 	@GetMapping("/id/{carreraId}")
 	public Carrera buscarCarreraPorId(@PathVariable Integer carreraId) {
 		Carrera carrera = carreraDao.buscarPorId(carreraId).orElse(null);
@@ -52,8 +65,16 @@ public class CarreraController {
 		return carrera;
 	}
 	
+	
+	/**
+	 * Endpoint para crear una nueva carrera
+	 * @param carrera Recibe la informacion de la carrera 
+	 * @param result 
+	 * @return El objeto Carrera con mensaje httpstatus
+	 * @author BRPI14/05/22
+	 */
 	@PostMapping
-	public ResponseEntity<?> guararCarrera(@Valid @RequestBody Carrera carrera, BindingResult result){
+	public ResponseEntity<?> guardarCarrera(@Valid @RequestBody Carrera carrera, BindingResult result){
 		Map<String, Object> validaciones = new HashMap<String, Object>();
 		if(result.hasErrors()) {
 			List<String> listaErrores = result.getFieldErrors()
@@ -88,6 +109,12 @@ public class CarreraController {
 		return new ResponseEntity<Carrera>(carreraActualizada, HttpStatus.OK);
 	}
 	
+	/**
+	 * Endpoint para borrar una carrera
+	 * @param carreraId Id de la carrera que se quiere borrar
+	 * @NotFoundException En caso de que falle la actualizacion del objeto
+	 * @return El objeto que ha sido eliminado
+	 */
 	@DeleteMapping("/carreraId/{carreraId}")
 	public ResponseEntity<?> eliminarCarrera(@PathVariable Integer carreraId){
 		Map<String, Object> respuesta = new HashMap<String, Object>();
@@ -103,6 +130,14 @@ public class CarreraController {
 		return new ResponseEntity<Map<String, Object>>(respuesta, HttpStatus.ACCEPTED);
 	}
 	
+	/**
+	 * Endpoint para buscar carrera por nombre y apellido de un profesor
+	 * @param apellido del profesor
+	 * @param nombre del profesor 
+	 * @NotFoundException En caso de que falle la actualizacion del objeto
+	 * @return carreras encontradas
+	 * @author BRPI 12/05/22
+	 */
 	@GetMapping("/nombre/{nombre}/apellido/{apellido}")
 	public List<Carrera> buscarCarreraPorProfesorNombreApellido(@PathVariable String apellido, @PathVariable String nombre){
 		List<Carrera> carreras = (List<Carrera>)carreraDao.buscarCarrerasPorProfesoresNombreYProfesoresApellido(nombre, apellido);

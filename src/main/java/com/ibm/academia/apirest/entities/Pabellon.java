@@ -18,6 +18,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -41,8 +44,11 @@ public class Pabellon implements Serializable{
 	private Integer id;
 	
 	@Column(name = "metros_cuadrados")
+	@Positive(message = "El campo debe ser mayor a cero.")
 	private Double metrosCuadrados;
 	
+	@NotNull(message = "El campo no puede ser nulo")
+	@NotEmpty(message = "El campo no puede ser vacío")
 	@Column(name = "nombre", unique = true, nullable = false)
 	private String nombre;
 	

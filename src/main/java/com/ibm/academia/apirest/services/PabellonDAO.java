@@ -8,4 +8,5 @@ public interface PabellonDAO extends GenericoDAO<Pabellon>{
 	
 	public Iterable<Pabellon> findPabellonesByNombreIgnoreCase(String nombre);
 	
+	
 }

@@ -34,6 +34,8 @@ public class AlumnoController {
 	@Autowired
 	private CarreraDAO carreraDao;
 	
+	
+	
 	/**
 	 * Endpint para crear un objeto Persona de tipo Alumno
 	 * @param alumno Objeto alumno con la informacion a crear
@@ -46,6 +48,7 @@ public class AlumnoController {
 		
 		return new ResponseEntity<Persona>(alumnoGuardado, HttpStatus.CREATED);
 	}
+	
 	
 	/**
 	 * Endpoint para consultar la lista de alumnos
@@ -80,7 +83,7 @@ public class AlumnoController {
 	/**
 	 * Endpoint para actualizar los datos de un alumno1
 	 * @param alumnoId Recibe el id del alumno que se quiere actualizar
-	 * @param alumno Recibe el objeto Alumno con los datos nuevos
+	 * @param alumno Recibe el objeto Persona con los datos nuevos
 	 * @NotFoundException En caso de que falle la actualizacion
 	 * @return Retorna un objeto Persona de tipo alumno con la informacion actualizada
 	 * @author BRPI

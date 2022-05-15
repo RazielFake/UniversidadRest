@@ -18,6 +18,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ibm.academia.apirest.enums.Pizarron;
@@ -39,12 +42,17 @@ public class Aula implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotNull(message = "El campo no puede ser nulo")
+	@NotEmpty(message = "El campo no puede ser vacío")
+	@Positive(message = "El campo debe ser mayor a cero.")
 	@Column(name = "numero_aula", nullable = false)
 	private Integer numeroAula;
+	
 	
 	@Column(name = "medidas")
 	private String medidas;
 	
+	@Positive(message = "El campo debe ser mayor a cero.")
 	@Column(name = "cantidad_pupitres")
 	private Integer cantidadPupitres;
 	

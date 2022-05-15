@@ -12,6 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.Positive;
 
 import com.ibm.academia.apirest.enums.TipoEmpleado;
 
@@ -27,6 +28,7 @@ import lombok.Setter;
 @PrimaryKeyJoinColumn(name = "persona_id")
 public class Empleado extends Persona{
 
+	@Positive(message = "El campo debe ser mayor a cero.")
 	@Column(name = "sueldo")
 	private BigDecimal sueldo;
 	

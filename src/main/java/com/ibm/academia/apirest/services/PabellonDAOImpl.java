@@ -26,7 +26,6 @@ public class PabellonDAOImpl extends GenericoDAOImpl<Pabellon, PabellonRepositor
 	public Iterable<Pabellon> findPabellonesByNombreIgnoreCase(String nombre) {
 		return this.repository.findPabellonesByNombreIgnoreCase(nombre);
 	}
+
 	
-
-
 }
