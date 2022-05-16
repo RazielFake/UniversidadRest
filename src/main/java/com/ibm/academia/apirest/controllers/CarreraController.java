@@ -21,9 +21,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ibm.academia.apirest.entities.Carrera;
 import com.ibm.academia.apirest.exceptions.BadRequestException;
 import com.ibm.academia.apirest.exceptions.NotFoundException;
+import com.ibm.academia.apirest.mapper.CarreraMapper;
+import com.ibm.academia.apirest.models.dto.CarreraDTO;
+import com.ibm.academia.apirest.models.entities.Carrera;
 import com.ibm.academia.apirest.services.CarreraDAO;
 
 @RestController
@@ -35,8 +37,8 @@ public class CarreraController {
 	
 	/**
 	 * Endpoint para listar carreras existentes
-	 * @BadRequestException En caso de que no existan carreras 
-	 * @return las carreras existentes
+	 * @BadRequestException En caso de que no existan carreras en la base de datos
+	 * @return Lista de las carreras existentes
 	 * @author BRPI 14/05/22
 	 */
 	@GetMapping("/lista/carreras")
@@ -50,8 +52,8 @@ public class CarreraController {
 	
 	/**
 	 * Endpoint para buscar una carrera por su id
-	 * @param carreraId id de la carrera que se quiere buscar
-	 * @BadRequestException En caso de que falle
+	 * @param carreraId Recibe el id de la carrera que se quiere buscar
+	 * @BadRequestException En caso de que falle y no se encuentre la carrera solicitada
 	 * @return Un objeto tipo Carrera
 	 * @author BRPI 14/05/22
 	 */
@@ -67,11 +69,11 @@ public class CarreraController {
 	
 	
 	/**
-	 * Endpoint para crear una nueva carrera
-	 * @param carrera Recibe la informacion de la carrera 
+	 * Endpoint para crear y guardar una nueva carrera
+	 * @param carrera Informacion necesaria para crear el objeto de tipo Carrera y guardarlo
 	 * @param result 
-	 * @return El objeto Carrera con mensaje httpstatus
-	 * @author BRPI14/05/22
+	 * @return Retorna un objeto Carrera con codigo httpstatus 
+	 * @author BRPI 14/05/22
 	 */
 	@PostMapping
 	public ResponseEntity<?> guardarCarrera(@Valid @RequestBody Carrera carrera, BindingResult result){
@@ -90,10 +92,10 @@ public class CarreraController {
 	
 	/**
 	 * Endpoint para actualizar un objeto de tipo carrera
-	 * @param carreraId Parametro para buscar la carrera
-	 * @param carrera Objeto con la informacion a modificar
-	 * @return retorna un objeto de tipo carrera con la info actualizada
-	 * @NotFoundException En caso de que falle la actualizacion del objeto
+	 * @param carreraId Recibe el id de la carrera que se quiere actualizar
+	 * @param carrera Recibe los datos que se quieren actualizar
+	 * @NotFoundException En caso de que falle y no encuentre la carrera solicitada
+	 * @return @return Retorna un objeto Carrera con codigo httpstatus
 	 * @author BRPI 12/05/22
 	 */
 	@PutMapping("/upd/carreraId/{carreraId}")
@@ -111,9 +113,10 @@ public class CarreraController {
 	
 	/**
 	 * Endpoint para borrar una carrera
-	 * @param carreraId Id de la carrera que se quiere borrar
-	 * @NotFoundException En caso de que falle la actualizacion del objeto
-	 * @return El objeto que ha sido eliminado
+	 * @param carreraId Recibe el id de la carrera que se quiere eliminar
+	 * @NotFoundException En caso de que falle y no encuentre la carrera solicitada
+	 * @return @return Confirmacion de que la carrera ha sido eliminada con codigo httpstatus
+	 * @author BRPI 12/05/22
 	 */
 	@DeleteMapping("/carreraId/{carreraId}")
 	public ResponseEntity<?> eliminarCarrera(@PathVariable Integer carreraId){
@@ -132,10 +135,10 @@ public class CarreraController {
 	
 	/**
 	 * Endpoint para buscar carrera por nombre y apellido de un profesor
-	 * @param apellido del profesor
-	 * @param nombre del profesor 
-	 * @NotFoundException En caso de que falle la actualizacion del objeto
-	 * @return carreras encontradas
+	 * @param apellido Recibe el apellido del profesor
+	 * @param nombre Recibe el nombre del profesor 
+	 * @NotFoundException En caso de que falle y no encuentre la carrera solicitada
+	 * @return Lista de carreras
 	 * @author BRPI 12/05/22
 	 */
 	@GetMapping("/nombre/{nombre}/apellido/{apellido}")
@@ -146,5 +149,27 @@ public class CarreraController {
 		
 		return carreras;
 	}
+	
+	/**
+	 * Endpoint para listar todas las carreras
+	 * @return Retorna una lista de carreras en DTO
+	 * @NotFoundException En caso de que no existan carreras en la base de datos
+	 * @author BRPI 15/05/22
+	 */
+	@GetMapping("/carreras/dto")
+	public ResponseEntity<?> obtenerCarrerasDTO(){
+		List<Carrera> carreras = (List<Carrera>) carreraDao.buscarTodos();
+		
+		if(carreras.isEmpty())
+			throw new NotFoundException("No existen carreras en la bbdd");
+		
+		List<CarreraDTO> listaCarreras = carreras
+				.stream()
+				.map(CarreraMapper::mapCarrera)
+				.collect(Collectors.toList());
+		
+		return new ResponseEntity<List<CarreraDTO>>(listaCarreras, HttpStatus.OK);
+	}
+	
 
 }

@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ibm.academia.apirest.entities.Pabellon;
 import com.ibm.academia.apirest.exceptions.NotFoundException;
+import com.ibm.academia.apirest.models.entities.Pabellon;
 import com.ibm.academia.apirest.services.PabellonDAO;
 
 @RestController
@@ -32,10 +32,10 @@ public class PabellonController {
 	private PabellonDAO pabellonDao;
 	
 	/**
-	 * Endpoint para guardar un objeto tipo Pabellon
-	 * @param pabellon Informacion que se quiere guardar
+	 * Endpoint para crear y guardar un nuevo pabellon
+	 * @param pabellon Informacion necesaria para crear el objeto de tipo Pabellon y guardarlo
 	 * @param result
-	 * @return Objeto tipo pabellon
+	 * @return Retorna un objeto Carrera con codigo httpstatus 
 	 * @author BRPI 14/05/22
 	 */
 	@PostMapping
@@ -55,8 +55,8 @@ public class PabellonController {
 	
 	/**
 	 * Endpoint para listar los pabellones existentes
-	 * @return informacion con los pabellones existentes
-	 * @NotFoundException en caso de que falle durante el proceso
+	 * @NotFoundException En caso de que no existan carreras en la base de datos
+	 * @return Lista de pabellones
 	 * @author BRPI 14/05/22
 	 */
 	@GetMapping("/pabellones/lista")
@@ -70,9 +70,11 @@ public class PabellonController {
 	
 	
 	/**
-	 * Endponint para eliminar un objeto de tipo Pabellon
-	 * @param pabellonId id del pabellon que se quiere eliminar
-	 * @return Confirmacion de eliminacion exitosa
+	 * Endpoint para borrar un pabellon
+	 * @param pabellonId Recibe el id del pabellon que se quiere eliminar
+	 * @NotFoundException En caso de que falle y no encuentre el pabellon solicitado
+	 * @return @return Confirmacion de que el pabellon ha sido eliminado con codigo httpstatus
+	 * @author BRPI 12/05/22
 	 */
 	@DeleteMapping("/pabellonId/{pabellonId}")
 	public ResponseEntity<?> eliminarAlumno(@PathVariable Integer pabellonId){
@@ -91,9 +93,9 @@ public class PabellonController {
 	/**
 	 * Endpoint para buscar pabellones dentro de un mismo local
 	 * @param local Recibe el local por el cual se requiere buscar los pabellones
-	 * @NotFoundException En caso de que no se encuentren pabellones
-	 * @return Lista de pabellones encontrados
-	 * @author BRPI
+	 * @NotFoundException En caso de que falle y no se encuentren pabellones dentro del local solicitado
+	 * @return Lista de pabellones encontrados pertenecientes al local solicitado
+	 * @author BRPI 14/05/22
 	 */
 	@GetMapping("/pabellones/local/{local}")
 	public List<Pabellon> buscarPabellonesPorLocal(@PathVariable String local){
@@ -108,9 +110,9 @@ public class PabellonController {
 	/**
 	 * Endpoint para buscar pabellones por nombre
 	 * @param nombre Recibe el nombre del pabellon que se requiere buscar
-	 * @NotFoundException En caso de que no se encuentren pabellones
-	 * @return Lista de pabellones encontrados
-	 * @author BRPI
+	 * @NotFoundException En caso de que falle y no se encuentren pabellones con el nombre solicitado
+	 * @return Lista de pabellones
+	 * @author BRPI 14/05/22
 	 */
 	@GetMapping("/pabellones/nombre/{nombre}")
 	public List<Pabellon> buscarPabellonesPorNombre(@PathVariable String nombre){

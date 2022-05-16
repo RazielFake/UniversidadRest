@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ibm.academia.apirest.entities.Empleado;
-import com.ibm.academia.apirest.entities.Persona;
 import com.ibm.academia.apirest.exceptions.NotFoundException;
+import com.ibm.academia.apirest.models.entities.Empleado;
+import com.ibm.academia.apirest.models.entities.Persona;
 import com.ibm.academia.apirest.services.EmpleadoDAO;
 import com.ibm.academia.apirest.services.PersonaDAO;
 
@@ -42,10 +42,10 @@ public class EmpleadoController {
 	
 	
 	/**
-	 * Endpoint para crear un nuevo empleado
-	 * @param empleado Informacion del empleado que se quiere crear
+	 * Endpoint para crear objeto Persona de tipo Empleado
+	 * @param empleado Informacion necesaria para crear el objeto de tipo Empleado y guardarlo
 	 * @param result
-	 * @return Objeto Persona tipo empleado
+	 * @return Retorna un objeto Persona de tipo Empleado con codigo httpstatus
 	 * @author BRPI 14/05/22
 	 */
 	@PostMapping
@@ -64,11 +64,11 @@ public class EmpleadoController {
 	}
 	
 	/**
-	 * Endpoint para obtener un empleado por Id
-	 * @param empleadoId El id del empleado que se desea obtener
-	 * @return Retorna un objeto de tipo persona con la informacion del empleado
-	 * @NotFoundException En caso de que falle 
-	 * @author BRPI
+	 * Endpoint para obtener la informacion un Empleado por Id
+	 * @param empleadoId El id del Empleado que se desea buscar
+	 * @NotFoundException En caso de que falle y no encuentre el Empleado solicitado
+	 * @return Retorna un objeto Persona de tipo Empleado con codigo httpstatus
+	 * @author BRPI 14/05/22
 	 */
 	@GetMapping("/empleadoId/{empleadoId}")
 	public ResponseEntity<?> obtenerEmpleadoPorId(@PathVariable Integer empleadoId){
@@ -81,12 +81,12 @@ public class EmpleadoController {
 	}
 	
 	/**
-	 * Endpoint para actualizar los datos de un empleado
-	 * @param empleadoId Recibe el id del empleado que se quiere actualizar
-	 * @param empleadoRecibe el objeto Persona con los datos nuevos
-	 * @NotFoundException En caso de que falle la actualizacion
-	 * @return Retorna un objeto Persona de tipo empleado con la informacion actualizada
-	 * @author BRPI
+	 * Endpoint para actualizar los datos de un Empleado
+	 * @param empleadoId Recibe el id del Empleado que se quiere actualizar
+	 * @param empleado Recibe los datos que se quieren actualizar
+	 * @NotFoundException En caso de que falle y no encuentre el Empleado solicitado
+	 * @return Retorna un objeto Persona de tipo Empleado con codigo httpstatus
+	 * @author BRPI 14/05/22
 	 */
 	@PutMapping("/upd/empleadoId/{empleadoId}")
 	public ResponseEntity<?> actualizarAlumno(@PathVariable Integer empleadoId, @RequestBody Persona empleado){
@@ -101,10 +101,11 @@ public class EmpleadoController {
 	}
 	
 	/**
-	 * Endpoint para borrar un empleado
-	 * @param empleadoId Recibe el id de empleado que sera borrado
-	 * @NotFoundException En caso de que falle durante el proceso
-	 * @return Confirmacion de que el empleado ha sido eliminado
+	 * Endpoint para borrar un Empleado
+	 * @param empleadoId Recibe el id del Empleado que se quiere eliminar
+	 * @NotFoundException En caso de que falle y no encuentre el empleado solicitado
+	 * @return Confirmacion de que el empleado ha sido eliminado con codigo httpstatus
+	 * @author BRPI 14/05/22
 	 */
 	@DeleteMapping("/empleadoId/{empleadoId}")
 	public ResponseEntity<?> eliminarAlumno(@PathVariable Integer empleadoId){
@@ -120,11 +121,11 @@ public class EmpleadoController {
 	}
 	
 	/**
-	 * Endpoint que busca un empleado por su tipo
+	 * Endpoint que busca un empleado por su tipo de empleado
 	 * @param String Requiere el tipo de empleado que se quiere buscar
-	 * @NotFoundException En caso de que falle el proceso
-	 * @return Un objeto Persona de tipo empleado
-	 * @author BRPI
+	 * @NotFoundException En caso de que falle y no encuentre el empleado solicitado
+	 * @return Lista con los empleados correspondienes al tipo solicitado
+	 * @author BRPI 14/05/22
 	 */
 	@GetMapping("/tipo/{tipoEmpleado}")
 	public ResponseEntity<?> obtenerEmpleadoPorTipo(@PathVariable String tipoEmpleado){

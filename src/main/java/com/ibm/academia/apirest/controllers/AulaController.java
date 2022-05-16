@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ibm.academia.apirest.entities.Aula;
 import com.ibm.academia.apirest.exceptions.NotFoundException;
+import com.ibm.academia.apirest.models.entities.Aula;
 import com.ibm.academia.apirest.services.AulaDAO;
 
 @RestController
@@ -35,9 +35,9 @@ public class AulaController {
 	
 	/**
 	 * Endpoint para crear una nueva Aula
-	 * @param aula La informacion del aula que sera creada
+	 * @param aula Informacion necesaria para crear el objeto de tipo Aula y guardarlo
 	 * @param result 
-	 * @return Objeto tipo aula con mensaje httpstatus
+	 * @return Retorna un objeto Aula de tipo alumno con codigo httpstatus
 	 * @author BRPI 14/05/22
 	 */
 	@PostMapping
@@ -58,8 +58,8 @@ public class AulaController {
 	
 	/**
 	 * Endpoint para listar las aulas existentes
-	 * @return lista con aulas
-	 * @NotFoundException en caso de que falle durante el proceso
+	 * @NotFoundException En caso de que no existan aulas en la base de datos
+	 * @return Lista con las aulas existentes con codigo httpstatus 
 	 * @author BRPI 14/05/22
 	 */
 	@GetMapping("/aulas/lista")
@@ -72,10 +72,10 @@ public class AulaController {
 	
 	/**
 	 * Endpoint para actualizar la informacion de un Aula
-	 * @param aulaId El id del aula que se quiere actualizar
-	 * @param aula La informacion que se quiere actualizar
-	 * @NotFoundException en caso de que falle durante el proceso
-	 * @return Objeto aula actualizado
+	 * @param aulaId Recibe el id del aula que se quiere actualizar
+	 * @param aula Recibe los datos que se quieren actualizar
+	 * @NotFoundException En caso de que no existan aulas en la base de datos
+	 * @return Retorna un objeto Aula de tipo alumno con codigo httpstatus
 	 * @author BRPI 14/05/22
 	 */
 	@PutMapping("/upd/aulaId/{aulaId}")
@@ -92,8 +92,10 @@ public class AulaController {
 	
 	/**
 	 * Endponint para eliminar un objeto de tipo Aula
-	 * @param aulaId id del aula que se quiere eliminar
-	 * @return
+	 * @param aulaId Recibe el id del aula que se quiere eliminar
+	 * @NotFoundException En caso de que falle y no encuentre el aula solicitada
+	 * @return Confirmacion de que el aula ha sido eliminada con codigo httpstatus
+	 * @author BRPI 12/05/22
 	 */
 	@DeleteMapping("/aulaId/{aulaId}")
 	public ResponseEntity<?> eliminarAlumno(@PathVariable Integer aulaId){
@@ -111,11 +113,11 @@ public class AulaController {
 	
 	
 	/**
-	 * Endpoint para encontrar las aulas con un tipo de pizarron especifico
-	 * @param tipoPizarron El tipo de pizarron que las aulas tienen
-	 * @NotFoundException
-	 * @return Lista con las aulas correspondientes
-	 * @author BRPI
+	 * Endpoint para listar las aulas con un tipo de pizarron especifico
+	 * @param tipoPizarron El tipo de pizarron por el que se quiere realizar la busqueda
+	 * @NotFoundException En caso de que falle y no encuentre el aula con el tipo de pizarron solicitada
+	 * @return Lista de aulas con el tipo de pizarron solicitado 
+	 * @author BRPI 14/05/22
 	 */
 	@GetMapping("aulas/pizarron/{tipoPizarron}")
 	public List<Aula> buscarPorTipoPizarron(@PathVariable String tipoPizarron){
@@ -129,9 +131,9 @@ public class AulaController {
 	/**
 	 * Endpoint para encontrar las aulas pertenecientes a un pabellon
 	 * @param pabellon Recibe el nombre del pabellon 
-	 * @NotFoundException en caso de que no encuentre aulas pertenecientes al pabellon
-	 * @return Lista con aulas pertenecientes al pabellon requerido
-	 * @author BRPI
+	 * @NotFoundException En caso de que falle y no encuentre aulas pertenecientes al pabellon solicitado
+	 * @return Lista con aulas pertenecientes al pabellon solicitado
+	 * @author BRPI 14/05/22
 	 */
 	@GetMapping("aulas/pabellon/{pabellon}")
 	public List<Aula> buscarPorNombrePabellon(@PathVariable String pabellon){
@@ -146,9 +148,9 @@ public class AulaController {
 	/**
 	 * Endpoint para buscar un aula por su numero
 	 * @param numero Recibe el numero del aula que se quiere buscar
-	 * @NotFoundException En caso de que no encuentre el aula requerida
-	 * @return Un objeto aula
-	 * @author BRPI
+	 * @NotFoundException En caso de que falle y no encuentre el aula requerida
+	 * @return Un objeto aula con codigo httpstatus
+	 * @author BRPI 14/05/22
 	 */
 	@GetMapping("numero/{numero}")
 	public ResponseEntity<?> buscarPorNumeroAula(@PathVariable Integer numero){

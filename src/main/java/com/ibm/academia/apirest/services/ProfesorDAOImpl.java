@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ibm.academia.apirest.entities.Persona;
+import com.ibm.academia.apirest.models.entities.Persona;
 import com.ibm.academia.apirest.repositories.PersonaRepository;
 import com.ibm.academia.apirest.repositories.ProfesorRepository;
 
@@ -22,5 +22,16 @@ public class ProfesorDAOImpl extends PersonaDAOImpl implements ProfesorDAO{
 	public Iterable<Persona> buscarProfesoresPorNombreCarrera(String carrera) {
 		return ((ProfesorRepository)this.repository).buscarProfesoresPorNombreCarrera(carrera);
 	}
+
+	@Override
+	public Persona actualizar(Persona profesorEncontrado, Persona profesor) {
+		Persona profesorActualizado = null;
+		profesorEncontrado.setNombre(profesor.getNombre());
+		profesorEncontrado.setApellido(profesor.getApellido());
+		profesorActualizado = this.repository.save(profesorEncontrado);
+		return profesorActualizado;
+	}
+
+	
 
 }

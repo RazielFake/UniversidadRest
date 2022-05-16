@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ibm.academia.apirest.entities.Aula;
 import com.ibm.academia.apirest.enums.Pizarron;
+import com.ibm.academia.apirest.models.entities.Aula;
 import com.ibm.academia.apirest.repositories.AulaRepository;
 
 @Service

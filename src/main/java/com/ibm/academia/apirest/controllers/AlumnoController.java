@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ibm.academia.apirest.entities.Carrera;
-import com.ibm.academia.apirest.entities.Persona;
 import com.ibm.academia.apirest.exceptions.NotFoundException;
+import com.ibm.academia.apirest.models.entities.Carrera;
+import com.ibm.academia.apirest.models.entities.Persona;
 import com.ibm.academia.apirest.services.AlumnoDAO;
 import com.ibm.academia.apirest.services.CarreraDAO;
 import com.ibm.academia.apirest.services.PersonaDAO;
@@ -38,8 +38,8 @@ public class AlumnoController {
 	
 	/**
 	 * Endpint para crear un objeto Persona de tipo Alumno
-	 * @param alumno Objeto alumno con la informacion a crear
-	 * @return Retorna un objeto Persona de tipo alumno con codigo httpstatus
+	 * @param alumno Informacion necesaria para crear el objeto de tipo Alumno y guardarlo
+	 * @return Retorna un objeto Persona de tipo Alumno con codigo httpstatus
 	 * @author BRPI 12/05/22
 	 */
 	@PostMapping
@@ -53,6 +53,7 @@ public class AlumnoController {
 	/**
 	 * Endpoint para consultar la lista de alumnos
 	 * @return Lista de alumnos
+	 * @NotFoundException En caso de que no existan alumnos en la base de datos
 	 * @author BRPI 12/05/22
 	 */
 	@GetMapping("/alumnos/lista")
@@ -64,11 +65,11 @@ public class AlumnoController {
 	}
 	
 	/**
-	 * Endpoint para obtener un alumno por Id
-	 * @param alumnoId El id del alumno que se desea obtener
-	 * @return Retorna un objeto de tipo persona con la informacion del alumno
-	 * @NotFoundException En caso de que falle 
-	 * @author BRPI
+	 * Endpoint para obtener la informacion un alumno por Id
+	 * @param alumnoId El id del alumno que se desea buscar
+	 * @NotFoundException En caso de que falle y no encuentre el alumno solicitado
+	 * @return Retorna un objeto Persona de tipo alumno con codigo httpstatus
+	 * @author BRPI 12/05/22
 	 */
 	@GetMapping("/alumnoId/{alumnoId}")
 	public ResponseEntity<?> obtenerAlumnoPorId(@PathVariable Integer alumnoId){
@@ -81,12 +82,12 @@ public class AlumnoController {
 	}
 	
 	/**
-	 * Endpoint para actualizar los datos de un alumno1
+	 * Endpoint para actualizar los datos de un alumno
 	 * @param alumnoId Recibe el id del alumno que se quiere actualizar
-	 * @param alumno Recibe el objeto Persona con los datos nuevos
-	 * @NotFoundException En caso de que falle la actualizacion
-	 * @return Retorna un objeto Persona de tipo alumno con la informacion actualizada
-	 * @author BRPI
+	 * @param alumno Recibe los datos que se quieren actualizar
+	 * @NotFoundException En caso de que falle y no encuentre el alumno solicitado
+	 * @return Retorna un objeto Persona de tipo alumno con codigo httpstatus
+	 * @author BRPI 12/05/22
 	 */
 	@PutMapping("/upd/alumnoId/{alumnoId}")
 	public ResponseEntity<?> actualizarAlumno(@PathVariable Integer alumnoId, @RequestBody Persona alumno){
@@ -102,9 +103,10 @@ public class AlumnoController {
 	
 	/**
 	 * Endpoint para borrar un alumno
-	 * @param alumnoId Recibe el id de alumno que sera borrado
-	 * @NotFoundException En caso de que falle durante el proceso
-	 * @return Confirmacion de que el alumno ha sido eliminado
+	 * @param alumnoId Recibe el id de alumno que se quiere eliminar
+	 * @NotFoundException En caso de que falle y no encuentre el alumno solicitado
+	 * @return Confirmacion de que el alumno ha sido eliminado con codigo httpstatus
+	 * @author BRPI 12/05/22
 	 */
 	@DeleteMapping("/alumnoId/{alumnoId}")
 	public ResponseEntity<?> eliminarAlumno(@PathVariable Integer alumnoId){
@@ -122,10 +124,10 @@ public class AlumnoController {
 	/**
 	 * Endpoint para asociar una carrera a un alumno
 	 * @param carreraId Id de la carrera con la que se va asociar el alumno
-	 * @param alumnoId Id de la carrera que se asociara al alumno
-	 * @NotFoundException En caso de que la actualizacion falle
-	 * @return Retorna un objeto Persona tipo alumno
-	 * @author BRPI
+	 * @param alumnoId Id del alumno al se asociara la carrera
+	 * @NotFoundException En caso de que falle y no encuentre el alumno solicitado
+	 * @return Confirmacion de que el alumno ha sido eliminado
+	 * @author BRPI 12/05/22
 	 */
 	@PutMapping("/alumnoId/{alumnoId}/carrera/{carreraId}")
 	public ResponseEntity<?> asignarCarreraAlumno(@PathVariable Integer carreraId, @PathVariable Integer alumnoId){
